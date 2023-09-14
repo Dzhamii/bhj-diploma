@@ -4,18 +4,18 @@
   }
 
   static unsetCurrent() {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
   }
 
   static current() {
-    return JSON.parse(localStorage.getItem('user'));
+    return JSON.parse(localStorage.getItem("user"));
   }
 
   static fetch(callback) {
     createRequest({
-      url: '/user/current',
-      method: 'GET',
-      responseType: 'json',
+      url: "/user/current",
+      method: "GET",
+      responseType: "json",
       callback: (err, response) => {
         if (response && response.success) {
           this.setCurrent(response.user);
@@ -27,9 +27,9 @@
 
   static login(data, callback) {
     createRequest({
-      url: '/user/login',
-      method: 'POST',
-      responseType: 'json',
+      url: "/user/login",
+      method: "POST",
+      responseType: "json",
       data,
       callback: (err, response) => {
         if (response && response.user) {
