@@ -1,34 +1,44 @@
-/**
- * Класс Sidebar отвечает за работу боковой колонки:
- * кнопки скрытия/показа колонки в мобильной версии сайта
- * и за кнопки меню
- * */
 class Sidebar {
-  /**
-   * Запускает initAuthLinks и initToggleButton
-   * */
   static init() {
     this.initAuthLinks();
     this.initToggleButton();
   }
 
-  /**
-   * Отвечает за скрытие/показа боковой колонки:
-   * переключает два класса для body: sidebar-open и sidebar-collapse
-   * при нажатии на кнопку .sidebar-toggle
-   * */
-  static initToggleButton() {
+  static initAuthLinks() {
+    const registerButton = document.querySelector(".sidebar-menu .menu-item-register");
+    const loginButton = document.querySelector(".sidebar-menu .menu-item-login");
+    const logoutButton = document.querySelector(".sidebar-menu .menu-item-logout");
 
+    registerButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      const registerModal = App.getModal("#modal-register");
+      registerModal.open();
+    });
+
+    loginButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      const loginModal = App.getModal("#modal-login");
+      loginModal.open();
+    });
+
+    logoutButton.addEventListener("click", async (event) => {
+      event.preventDefault();
+      const response = await User.logout();
+      if (response && response.success) {
+        App.setState("init");
+      }
+    });
   }
 
-  /**
-   * При нажатии на кнопку входа, показывает окно входа
-   * (через найденное в App.getModal)
-   * При нажатии на кнопку регастрации показывает окно регистрации
-   * При нажатии на кнопку выхода вызывает User.logout и по успешному
-   * выходу устанавливает App.setState( 'init' )
-   * */
-  static initAuthLinks() {
+  static initToggleButton() {
+    const sidebarToggle = document.querySelector(".sidebar-toggle");
 
+    sidebarToggle.addEventListener("click", (event) => {
+      event.preventDefault();
+      document.body.classList.toggle("sidebar-open");
+      document.body.classList.toggle("sidebar-collapse");
+    });
   }
 }
+
+Sidebar.init();
