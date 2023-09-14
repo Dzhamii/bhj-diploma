@@ -1,39 +1,4 @@
-const createRequest = options => {
-  const xhr = new XMLHttpRequest();
-  xhr.responseType = 'json';
-
-  const url = options.url;
-  const formData = new FormData();
-
-  if (options.method === 'GET') {
-    if (options.data) {
-      for (let key in options.data) {
-        url += `&${key}=${options.data[key]}`;
-      }
-    }
-
-    xhr.open(options.method, url);
-    xhr.send();
-  } else {
-    for (let key in options.data) {
-      formData.append(key, options.data[key]);
-    }
-
-    xhr.open(options.method, url);
-    xhr.send(formData);
-  }
-
-  xhr.onload = () => {
-    options.callback(null, xhr.response);
-  };
-
-  xhr.onerror = () => {
-    options.callback(xhr.response, null);
-  };
-};
-
-
-class User {
+  class User {
   static setCurrent(user) {
     localStorage.setItem('user', JSON.stringify(user));
   }
